@@ -41,10 +41,13 @@ INSTALLED_APPS = (
     'cart',
     'orders',
     'coupons',
+    'rosetta',
+    'parler',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -92,6 +95,13 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('ru', _('Русский')),
+)
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -113,3 +123,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 CART_SESSION_ID = 'cart'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en', },
+        {'code': 'ru', },
+    ),
+    'default': {
+        'fallback': 'en',
+        'hide_untranslated': False,
+    }
+}

@@ -11,9 +11,9 @@ class Cart(object):
 		if not cart:
 			cart = self.session[settings.CART_SESSION_ID] = {}
 
-		self.coupon_id = self.session.get('coupon_id')
-
 		self.cart = cart
+		# store applied coupon to session
+		self.coupon_id = self.session.get('coupon_id')
 
 	def add(self, product, quantity=1, update_quantity=False):
 		product_id = str(product.id)
@@ -59,6 +59,7 @@ class Cart(object):
 		del self.session[settings.CART_SESSION_ID]
 		self.session.modified = True
 
+	@property
 	def coupon(self):
 		if self.coupon_id:
 			return Coupon.objects.get(id=self.coupon_id)
